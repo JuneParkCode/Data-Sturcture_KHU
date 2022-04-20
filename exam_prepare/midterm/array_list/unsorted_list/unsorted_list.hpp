@@ -8,7 +8,7 @@ class FULL_LIST{};
 class EMPTY_LIST{};
 
 template <class ItemType>
-class UnsortedList
+class SortedList
 {
 private:
 	ItemType	*data;
@@ -16,10 +16,10 @@ private:
 	int			size;
 	int			maxSize;
 public:
-	UnsortedList();
-	UnsortedList(int maxSize);
-	UnsortedList(UnsortedList<ItemType> &otherList);
-	~UnsortedList();
+	SortedList();
+	SortedList(int maxSize);
+	SortedList(SortedList<ItemType> &otherList);
+	~SortedList();
 	int			getLength() const;
 	int			getMaxSize() const;
 	bool		isFull() const;
@@ -29,13 +29,13 @@ public:
 	void		deleteItem(ItemType item);
 	void		deleteItemAll(ItemType item);
 	bool		retrieveItem(ItemType item);
-	void		copyList(UnsortedList<ItemType> &otherList);
+	void		copyList(SortedList<ItemType> &otherList);
 	bool		getNextItem(ItemType &item);
-	void		operator=(UnsortedList<ItemType> &otherList);
+	void		operator=(SortedList<ItemType> &otherList);
 };
 
 template <class ItemType>
-UnsortedList<ItemType>::UnsortedList()
+SortedList<ItemType>::SortedList()
 {
 	this->maxSize = 100;
 	size = 0;
@@ -43,7 +43,7 @@ UnsortedList<ItemType>::UnsortedList()
 }
 
 template <class ItemType>
-UnsortedList<ItemType>::UnsortedList(int maxSize)
+SortedList<ItemType>::SortedList(int maxSize)
 {
 	this->maxSize = maxSize;
 	size = 0;
@@ -51,7 +51,7 @@ UnsortedList<ItemType>::UnsortedList(int maxSize)
 }
 
 template <class ItemType>
-UnsortedList<ItemType>::UnsortedList(UnsortedList<ItemType> &otherList)
+SortedList<ItemType>::SortedList(SortedList<ItemType> &otherList)
 {
 	this->maxSize = otherList.getMaxSize();
 	size = 0;
@@ -60,43 +60,43 @@ UnsortedList<ItemType>::UnsortedList(UnsortedList<ItemType> &otherList)
 }
 
 template <class ItemType>
-UnsortedList<ItemType>::~UnsortedList()
+SortedList<ItemType>::~SortedList()
 {
 	delete (this->data);
 }
 
 template <class ItemType>
-int	UnsortedList<ItemType>::getLength() const
+int	SortedList<ItemType>::getLength() const
 {
 	return (this->size);
 }
 
 template <class ItemType>
-int	UnsortedList<ItemType>::getMaxSize() const
+int	SortedList<ItemType>::getMaxSize() const
 {
 	return (this->maxSize);
 }
 
 template <class ItemType>
-bool UnsortedList<ItemType>::isEmpty() const
+bool SortedList<ItemType>::isEmpty() const
 {
 	return (this->size == 0);
 }
 
 template <class ItemType>
-bool UnsortedList<ItemType>::isFull() const
+bool SortedList<ItemType>::isFull() const
 {
 	return (this->size == this->maxSize);
 }
 
 template <class ItemType>
-void UnsortedList<ItemType>::resetList()
+void SortedList<ItemType>::resetList()
 {
 	this->curPos = -1;
 }
 
 template <class ItemType>
-void UnsortedList<ItemType>::insertItem(ItemType item)
+void SortedList<ItemType>::insertItem(ItemType item)
 {
 	if (this->isFull())
 		throw (FULL_LIST);
@@ -109,7 +109,7 @@ void UnsortedList<ItemType>::insertItem(ItemType item)
 	post	: 리스트에 item 과 같은 값을 갖는 데이터 중 하나만 삭제됨
 */
 template <class ItemType>
-void UnsortedList<ItemType>::deleteItem(ItemType item)
+void SortedList<ItemType>::deleteItem(ItemType item)
 {
 	int			pos;
 	ItemType	temp;
@@ -133,7 +133,7 @@ void UnsortedList<ItemType>::deleteItem(ItemType item)
 	post	: 리스트에 item 과 같은 값을 갖는 데이터 모두가 삭제됨
 */
 template <class ItemType>
-void UnsortedList<ItemType>::deleteItemAll(ItemType item)
+void SortedList<ItemType>::deleteItemAll(ItemType item)
 {
 	int			pos;
 	ItemType	temp;
@@ -151,7 +151,7 @@ void UnsortedList<ItemType>::deleteItemAll(ItemType item)
 }
 
 template <class ItemType>
-bool UnsortedList<ItemType>::retrieveItem(ItemType item)
+bool SortedList<ItemType>::retrieveItem(ItemType item)
 {
 	int			pos;
 	ItemType	temp;
@@ -165,7 +165,7 @@ bool UnsortedList<ItemType>::retrieveItem(ItemType item)
 }
 
 template <class ItemType>
-void UnsortedList<ItemType>::copyList(UnsortedList<ItemType> &otherList)
+void SortedList<ItemType>::copyList(SortedList<ItemType> &otherList)
 {
 	int	pos;
 	
@@ -180,7 +180,7 @@ void UnsortedList<ItemType>::copyList(UnsortedList<ItemType> &otherList)
 }
 
 template <class ItemType>
-bool	UnsortedList<ItemType>::getNextItem(ItemType &item)
+bool	SortedList<ItemType>::getNextItem(ItemType &item)
 {
 	if (this->curPos >= this->size)
 		return (false);
@@ -191,7 +191,7 @@ bool	UnsortedList<ItemType>::getNextItem(ItemType &item)
 
 /* if this->maxSize < otherList.maxSize : UNDEFINED */
 template <class ItemType>
-void	UnsortedList<ItemType>::operator=(UnsortedList<ItemType> &otherList)
+void	SortedList<ItemType>::operator=(SortedList<ItemType> &otherList)
 {
 	this->copyList(otherList);
 }
