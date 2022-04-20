@@ -88,12 +88,18 @@ StackType::StackType()	// Class constructor.
     topPtr = NULL;
 }
 
+StackType::StackType(StackType &anotherStack)	// Class constructor.
+{
+  this->topPtr = NULL;
+  this->Copy(anotherStack);
+}
+
 void StackType::Copy(StackType& anotherStack)
 {
   StackType tmp;
   NodeType  *node;
 
-  node = topPtr;
+  node = anotherStack.topPtr;
   while (node)
   {
     tmp.Push(node->info);
@@ -101,7 +107,40 @@ void StackType::Copy(StackType& anotherStack)
   }
   while (!tmp.IsEmpty())
   {
-    anotherStack.Push(tmp.Top());
+    this->Push(tmp.Top());
     tmp.Pop();
+  }
+}
+
+void StackType::operator=(StackType &otherStack)
+{
+  this->Copy(otherStack);
+}
+
+#include <iostream>
+int main(void)
+{
+  StackType s1;
+  StackType s2;
+
+  for (int i = 0; i < 10; ++i)
+  {
+    s1.Push(i);
+  }
+  s2 = s1;
+  StackType s3 = s1;
+  while (!s2.IsEmpty())
+  {
+    ItemType  item;
+    item = s2.Top();
+    std::cout << item << std::endl;
+    s2.Pop();
+  }
+  while (!s3.IsEmpty())
+  {
+    ItemType  item;
+    item = s3.Top();
+    std::cout << item << std::endl;
+    s3.Pop();
   }
 }
