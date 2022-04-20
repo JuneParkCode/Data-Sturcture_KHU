@@ -18,6 +18,7 @@ class StackType
 public:
 
   StackType();
+  StackType(StackType &anotherStack);
   // Class constructor.
   ~StackType();
   bool IsFull() const;
@@ -44,6 +45,7 @@ public:
   // Post: If (stack is empty), EmptyStack exception is thrown;
   //     otherwise, top element has been removed from stack.
   void Copy(StackType& anotherStack);
+  void operator=(StackType &anotherStack);
 
 private:
   NodeType* topPtr;
