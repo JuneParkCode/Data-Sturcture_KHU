@@ -50,6 +50,7 @@ template <class ItemType>
 SortedList<ItemType>::SortedList()
 {
 	this->maxSize = 100;
+	this->data = new ItemType(this->maxSize);
 	size = 0;
 	curPos = -1;
 }
@@ -58,6 +59,7 @@ template <class ItemType>
 SortedList<ItemType>::SortedList(int maxSize)
 {
 	this->maxSize = maxSize;
+	this->data = new ItemType(this->maxSize);
 	size = 0;
 	curPos = -1;
 }
@@ -66,6 +68,7 @@ template <class ItemType>
 SortedList<ItemType>::SortedList(SortedList<ItemType> &otherList)
 {
 	this->maxSize = otherList.getMaxSize();
+	this->data = new ItemType(this->maxSize);
 	size = 0;
 	curPos = -1;
 	this->copyList(otherList);
@@ -110,36 +113,31 @@ void SortedList<ItemType>::resetList()
 template <class ItemType>
 void SortedList<ItemType>::insertItem(ItemType item)
 {
-    bool    found;
-    int     start;
-    int     mid;
-    int     end;
-    int     pos;
+    bool	found;
+	int		pos;
 
-	if (this->isFull())
-		throw (FULL_LIST);
     /* binary search ... */
     found = false;
-    start = 0;
-    end = size;
-    while (!found && start < end)
+	pos = 0;
+    while (!found && pos < this->size)
     {
-        mid = (start + end) / 2;
-        switch (compare((this->data)[mid]))
+        switch (compare((this->data)[pos], item))
         {
-        case LESS:
-            end = mid;
-            break;
-        case GREATER:
-            start = mid;
-            break;
-        case EQUAL:
-            found = true;
-            pos = mid;
-            break;
+			case	GREATER:
+			case	EQUAL:
+					found = true;
+					break;
+			case	LESS:
+					++pos;
+					break;
         }
     }
-    
+    for (int i = this->size; i > pos; --i)
+	{
+		(this->data)[i] = (this->data)[i - 1];
+	}
+	(this->data)[pos] = item;
+	++(this->size);
 }
 
 /*
@@ -148,12 +146,38 @@ void SortedList<ItemType>::insertItem(ItemType item)
 template <class ItemType>
 void SortedList<ItemType>::deleteItem(ItemType item)
 {
-	int			pos;
-	ItemType	temp;
+	bool    found;
+    int     start;
+    int     mid;
+    int     end;
+    int     pos;
 
-	if (this->isEmpty())
-		throw (EMPTY_LIST);
-
+    /* binary search ... */
+    found = false;
+    start = 0;
+    end = size;
+    while (!found && start < end)
+    {
+        mid = (start + end) / 2;
+        pos = mid;
+        switch (compare((this->data)[mid]))
+        {
+        case LESS:
+            end = mid - 1;
+            break;
+        case GREATER:
+            start = mid + 1;
+            break;
+        case EQUAL:
+            found = true;
+            break;
+        }
+    }
+    for (int i = pos; i < this->size; ++i)
+	{
+		(this->data)[i] = (this->data)[i + 1];
+	}
+	--(this->size);
 }
 
 /*
@@ -165,8 +189,6 @@ void SortedList<ItemType>::deleteItemAll(ItemType item)
 	int			pos;
 	ItemType	temp;
 
-	if (this->isEmpty())
-		throw (EMPTY_LIST);
 	pos = 0;
 	while (pos < size && data[pos] != item)
 	{
@@ -201,7 +223,7 @@ void SortedList<ItemType>::copyList(SortedList<ItemType> &otherList)
 	otherList.resetList();
 	while (pos < size)
 	{
-		this->insertItem(otherList.getNextItem);
+		this->insertItem(otherList.getNextItem());
 		++pos;
 	}
 }
