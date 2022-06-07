@@ -1,10 +1,10 @@
 #include "GraphType.h"
 #include <iostream>
 
-template<class VertexType>
+template <class VertexType>
 void DepthFirstSearch(GraphType<VertexType> graph,
-     VertexType startVertex, VertexType endVertex)
-// Assumes VertexType is a type for which the Ò==Ò and "<<"  
+                      VertexType startVertex, VertexType endVertex)
+// Assumes VertexType is a type for which the ï¿½==ï¿½ and "<<"
 // operators are defined
 {
   using namespace std;
@@ -14,7 +14,7 @@ void DepthFirstSearch(GraphType<VertexType> graph,
   bool found = false;
   VertexType vertex;
   VertexType item;
-   
+
   graph.ClearMarks();
   stack.Push(startVertex);
   do
@@ -40,8 +40,8 @@ void DepthFirstSearch(GraphType<VertexType> graph,
             stack.Push(item);
         }
       }
-    }                
+    }
   } while (!stack.IsEmpty() && !found);
   if (!found)
     cout << "Path not found." << endl;
-} 
+}
