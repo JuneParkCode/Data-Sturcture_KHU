@@ -6,6 +6,7 @@ def depth_first_search(graph, startVertex, endVertex):
     found = False
 
     '''[9]'''
+<<<<<<< HEAD
     vertex = startVertex
     graph.clear_marks()
     while not found :
@@ -24,3 +25,5 @@ def depth_first_search(graph, startVertex, endVertex):
         stack.pop()
 
         
+=======
+>>>>>>> 0e9ef7cacba131df8a22df5756862f86bde8e18e
